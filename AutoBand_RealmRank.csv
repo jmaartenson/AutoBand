@@ -1,0 +1,3 @@
+Ignored by BuildTableFromCSV
+ID,NameLower,RenownRank,Level,CareerLine,CareerName,CareerIcon,Faction,Role,RealmId,CharacterId,Race,Sex,GeneratedUtc,GeneratedEpochMs,Source,StatsOrderCount,StatsDestroCount,StatsTotalCount,StatsOrderPct,StatsDestroPct,StatsT1OrderCount,StatsT1DestroCount,StatsT1TotalCount,StatsT1OrderPct,StatsT1DestroPct,StatsT2PlusOrderCount,StatsT2PlusDestroCount,StatsT2PlusTotalCount,StatsT2PlusOrderPct,StatsT2PlusDestroPct
+1,,,,,,,,,,,,,,,placeholder,,,,,,,,,,,,,,,

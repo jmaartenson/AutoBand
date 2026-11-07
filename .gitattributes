@@ -1,0 +1,7 @@
+# Preserve the released LuaPlus/XML bytes across platforms.
+* -text
+# Helpers remain browseable/downloadable, but never enter GitHub tag ZIPs.
+optional export-ignore
+optional/** export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore

@@ -1,0 +1,594 @@
+<Interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Interface.xsd">
+<Scripts>
+    <Script file="AutoBandWindow.lua" />
+    <Script file="AutoBandWindowLeaderPromotionPopup.lua" />
+    <Script file="AutoBandWindowScoreboardPreview.lua" />
+</Scripts>
+
+<Assets>
+    <Texture name="ab_icon" file="ab_icon.tga" />
+    <Texture name="ab_icon_over" file="ab_icon_over.tga" />
+</Assets>
+
+<Windows>
+    <Window name="AutoBandWindow" inherits="EA_Window_Default" movable="true" layer="secondary" savesettings="false">
+        <!-- 600 wide; height is set per tab (AutoBandWindow.PAGE_HEIGHTS) keeping the top edge.
+             Title 0-32, tabs 32-67, global strip 68-116 (controls centred, stock separator
+             line on its bottom edge), page area 134 to height-78 (content from y 138, 6 clear
+             above the footer), 72-high stock footer bar from height-72 with 39-high buttons
+             from height-51 to height-12 and footer text centred on them. -->
+        <Size>
+            <AbsPoint x="600" y="885" />
+        </Size>
+        <Anchors>
+            <Anchor point="center" relativePoint="center" />
+        </Anchors>
+
+        <EventHandlers>
+            <EventHandler event="OnInitialize" function="AutoBandWindow.Initialize" />
+        </EventHandlers>
+
+        <Windows>
+            <!-- Title Bar, Close button, and Corner Image -->
+            <Window name="$parentTitleBar" inherits="EA_TitleBar_Default" />
+            <Button name="$parentClose" inherits="EA_Button_DefaultWindowClose">
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindow.Hide" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentWarbandDisabledLabel" inherits="EA_Label_DefaultText" font="font_clear_small" textalign="right" wordwrap="false" handleinput="true" mouseovertext="false" layer="overlay">
+                <Size>
+                    <AbsPoint x="90" y="20" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topright" relativePoint="topright" relativeTo="$parentTitleBar">
+                        <AbsPoint x="-38" y="7" />
+                    </Anchor>
+                </Anchors>
+                <Color r="255" g="128" b="64" />
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindow.OnWarbandDisabledMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindow.OnWarbandDisabledMouseOverEnd" />
+                    <EventHandler event="OnRButtonUp" function="AutoBandWindow.OnWarbandDisabledRightClick" />
+                </EventHandlers>
+            </Label>
+
+            <!-- Main Window Background -->
+            <Window name="$parentBackground" inherits="EA_Window_DefaultBackgroundFrame" handleinput="true" popable="false">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" >
+                        <AbsPoint x="0" y="32" />
+                    </Anchor>
+                    <Anchor point="bottomright" relativePoint="bottomright" />
+                </Anchors>
+            </Window>
+
+            <!-- Dark backing behind the strip and pages so world text does not show through -->
+            <FullResizeImage name="$parentPageBacking" inherits="EA_FullResizeImage_TintableSolidBackground" handleinput="false" layer="background" alpha="0.8">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="8" y="67" />
+                    </Anchor>
+                    <Anchor point="bottomright" relativePoint="bottomright" relativeTo="$parent">
+                        <AbsPoint x="-8" y="-72" />
+                    </Anchor>
+                </Anchors>
+                <TintColor r="0" g="0" b="0" />
+            </FullResizeImage>
+            <FullResizeImage name="$parentGlobalStripBacking" inherits="EA_FullResizeImage_TintableSolidBackground" handleinput="false" layer="background" alpha="0.8">
+                <Size>
+                    <AbsPoint x="580" y="48" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="10" y="68" />
+                    </Anchor>
+                    <Anchor point="topright" relativePoint="topright" relativeTo="$parent">
+                        <AbsPoint x="-10" y="68" />
+                    </Anchor>
+                </Anchors>
+                <TintColor r="0" g="0" b="0" />
+            </FullResizeImage>
+
+            <!-- Tabs: original Templates | Tools | Config, plus Realm; ids match AB_const.TABS_* -->
+            <Window name="$parentTabs">
+                <Size>
+                    <AbsPoint x="600" y="35" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="0" y="32" />
+                    </Anchor>
+                </Anchors>
+                <Windows>
+                    <Window name="$parentSeparatorLeft" inherits="EA_Window_TabSeparatorLeftSide" layer="background" popable="false">
+                        <Anchors>
+                            <Anchor point="bottomleft" relativePoint="bottomleft">
+                                <AbsPoint x="0" y="-6" />
+                            </Anchor>
+                            <Anchor point="bottomleft" relativePoint="topright" relativeTo="$parentTemplate">
+                                <AbsPoint x="0" y="-6" />
+                            </Anchor>
+                        </Anchors>
+                    </Window>
+                    <Button name="$parentTemplate" inherits="EA_Button_Tab" id="1">
+                        <Size>
+                            <AbsPoint x="135" y="35" />
+                        </Size>
+                        <TextOffset x="0" y="5" />
+                        <Anchors>
+                            <Anchor point="topleft" relativePoint="topleft">
+                                <AbsPoint x="30" y="0" />
+                            </Anchor>
+                        </Anchors>
+                        <EventHandlers>
+                            <EventHandler event="OnLButtonUp" function="AutoBandWindow.OnLButtonUpTab" />
+                            <EventHandler event="OnMouseOver" function="AutoBandWindow.OnTabMouseOver" />
+                            <EventHandler event="OnMouseOverEnd" function="AutoBandWindow.OnFooterMouseOverEnd" />
+                        </EventHandlers>
+                    </Button>
+                    <Button name="$parentTools" inherits="EA_Button_Tab" id="2">
+                        <Size>
+                            <AbsPoint x="135" y="35" />
+                        </Size>
+                        <TextOffset x="0" y="5" />
+                        <Anchors>
+                            <Anchor point="topleft" relativePoint="topleft">
+                                <AbsPoint x="165" y="0" />
+                            </Anchor>
+                        </Anchors>
+                        <EventHandlers>
+                            <EventHandler event="OnLButtonUp" function="AutoBandWindow.OnLButtonUpTab" />
+                            <EventHandler event="OnMouseOver" function="AutoBandWindow.OnTabMouseOver" />
+                            <EventHandler event="OnMouseOverEnd" function="AutoBandWindow.OnFooterMouseOverEnd" />
+                        </EventHandlers>
+                    </Button>
+                    <Button name="$parentConfig" inherits="EA_Button_Tab" id="3">
+                        <Size>
+                            <AbsPoint x="135" y="35" />
+                        </Size>
+                        <TextOffset x="0" y="5" />
+                        <Anchors>
+                            <Anchor point="topleft" relativePoint="topleft">
+                                <AbsPoint x="300" y="0" />
+                            </Anchor>
+                        </Anchors>
+                        <EventHandlers>
+                            <EventHandler event="OnLButtonUp" function="AutoBandWindow.OnLButtonUpTab" />
+                            <EventHandler event="OnMouseOver" function="AutoBandWindow.OnTabMouseOver" />
+                            <EventHandler event="OnMouseOverEnd" function="AutoBandWindow.OnFooterMouseOverEnd" />
+                        </EventHandlers>
+                    </Button>
+                    <Button name="$parentRealm" inherits="EA_Button_Tab" id="4">
+                        <Size>
+                            <AbsPoint x="135" y="35" />
+                        </Size>
+                        <TextOffset x="0" y="5" />
+                        <Anchors>
+                            <Anchor point="topleft" relativePoint="topleft">
+                                <AbsPoint x="435" y="0" />
+                            </Anchor>
+                        </Anchors>
+                        <EventHandlers>
+                            <EventHandler event="OnLButtonUp" function="AutoBandWindow.OnLButtonUpTab" />
+                            <EventHandler event="OnMouseOver" function="AutoBandWindow.OnTabMouseOver" />
+                            <EventHandler event="OnMouseOverEnd" function="AutoBandWindow.OnFooterMouseOverEnd" />
+                        </EventHandlers>
+                    </Button>
+                    <Window name="$parentSeparatorRight" inherits="EA_Window_TabSeparatorRightSide" layer="background" popable="false">
+                        <Anchors>
+                            <Anchor point="bottomright" relativePoint="topleft" relativeTo="$parentRealm">
+                                <AbsPoint x="0" y="-6" />
+                            </Anchor>
+                            <Anchor point="bottomright" relativePoint="bottomright">
+                                <AbsPoint x="0" y="-6" />
+                            </Anchor>
+                        </Anchors>
+                    </Window>
+                </Windows>
+            </Window>
+
+            <!-- Global strip: visible on every tab -->
+            <Button name="$parentPmBlockCheckBox" inherits="EA_Button_DefaultCheckBox">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="24" y="81" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindow.OnPmBlockCheckBox" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindow.OnPmBlockMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindow.OnStripMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentPmBlockLabel" inherits="EA_Label_DefaultText" font="font_clear_medium_bold" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="230" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="52" y="85" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindow.OnClickPmBlockLabel" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindow.OnPmBlockMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindow.OnStripMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentWarbandCheckBox" inherits="EA_Button_DefaultCheckBox">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="306" y="81" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindow.OnWarbandCheckBox" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindow.OnWarbandMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindow.OnStripMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentWarbandLabel" inherits="EA_Label_DefaultText" font="font_clear_medium_bold" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="220" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="334" y="85" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindow.OnClickWarbandLabel" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindow.OnWarbandMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindow.OnStripMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+
+            <!-- Separator under the global strip -->
+            <Window name="$parentGlobalStripSeparator" inherits="EA_Window_DefaultSeparator" layer="background" handleinput="false">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="0" y="106" />
+                    </Anchor>
+                    <Anchor point="topright" relativePoint="topright" relativeTo="$parent">
+                        <AbsPoint x="0" y="106" />
+                    </Anchor>
+                </Anchors>
+            </Window>
+
+            <!-- Page area (pages anchor to it): y 134 to height-78 -->
+            <Window name="AutoBandTabsWindow" movable="false">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="0" y="134" />
+                    </Anchor>
+                    <Anchor point="bottomright" relativePoint="bottomright" relativeTo="$parent">
+                        <AbsPoint x="0" y="-78" />
+                    </Anchor>
+                </Anchors>
+            </Window>
+
+            <Window name="AutoBandWindowTemplateTab" inherits="AutoBandWindowTemplate" />
+            <Window name="AutoBandWindowToolsTab" inherits="AutoBandWindowTools" />
+            <Window name="AutoBandWindowConfigTab" inherits="AutoBandWindowConfig" />
+            <Window name="AutoBandWindowRealmTab" inherits="AutoBandWindowRealm" />
+
+            <!-- Footer (Tools, Config, Realm): Restore Defaults, active preset, version.
+                 Templates shows its own original footer (Save, Delete/Reset ... Apply). -->
+            <Window name="$parentButtonBar" inherits="EA_Window_DefaultButtonBottomFrame" layer="background">
+                <Size>
+                    <AbsPoint x="600" y="72" />
+                </Size>
+                <Anchors>
+                    <Anchor point="bottomleft" relativePoint="bottomleft" relativeTo="$parent">
+                        <AbsPoint x="0" y="0" />
+                    </Anchor>
+                    <Anchor point="bottomright" relativePoint="bottomright" relativeTo="$parent">
+                        <AbsPoint x="0" y="0" />
+                    </Anchor>
+                </Anchors>
+            </Window>
+            <Button name="$parentPageDefaultsButton" inherits="EA_Button_DefaultResizeable">
+                <Size>
+                    <AbsPoint x="180" y="39" />
+                </Size>
+                <Anchors>
+                    <Anchor point="bottomleft" relativePoint="bottomleft" relativeTo="$parent">
+                        <AbsPoint x="24" y="-12" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindow.OnPageDefaults" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindow.OnPageDefaultsMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindow.OnFooterMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <!-- Footer text: own left/right midpoint on the buttons' centre line (height-32);
+                 the height is set to the measured text height at runtime. -->
+            <Label name="$parentPresetLabel" inherits="EA_Label_DefaultText_Small" font="font_clear_small" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="264" y="20" />
+                </Size>
+                <Anchors>
+                    <Anchor point="bottomleft" relativePoint="left" relativeTo="$parent">
+                        <AbsPoint x="216" y="-32" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindow.OnPresetLabelClick" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindow.OnPresetLabelMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindow.OnFooterMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Label name="$parentVersionLabel" inherits="EA_Label_DefaultText" textalign="right" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="80" y="20" />
+                </Size>
+                <Anchors>
+                    <Anchor point="bottomright" relativePoint="right" relativeTo="$parent">
+                        <AbsPoint x="-24" y="-32" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindow.OnVersionMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindow.OnFooterMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+        </Windows>
+    </Window>    <!-- AutoBandWindow -->
+
+    <Window name="AutoBandMapIcon" layer="default" movable="false" popable="false" savesettings="true">
+        <Size>
+            <AbsPoint x="32" y="32"/>
+        </Size>
+        <Anchors>
+            <Anchor point="bottomright"
+                    relativeTo="EA_Window_OverheadMapMapDisplay"
+                    relativePoint="topleft">
+                <AbsPoint x="-75" y="-15" />
+            </Anchor>
+        </Anchors>
+        <Windows>
+            <Button name="$parentButton" inherits="DefaultButton" backgroundtexture="ab_icon" highlighttexture="ab_icon_over" layer="default" texturescale="1">
+                <Size>
+                    <AbsPoint x="32" y="32"/>
+                </Size>
+                                <EventHandlers>
+                                        <EventHandler event="OnLButtonUp" function="AutoBand.cmd_toggle_gui"/>
+                                        <EventHandler event="OnRButtonUp" function="AutoBand.HandleIconRightClick"/>
+                                        <EventHandler event="OnMouseOver" function="AutoBand.OnIconMouseOver" />
+                                        <EventHandler event="OnMouseLeave" function="AutoBand.OnIconMouseLeave" />
+                                </EventHandlers>
+                <TexSlices>
+                    <Normal id="SquareButton" /> 
+                    <NormalHighlit id="SquareButton-Rollover" /> 
+                    <Pressed id="SquareButton-Depressed" /> 
+                    <PressedHighlit id="SquareButton-Depressed" /> 
+                </TexSlices>
+                <Anchors>
+                    <Anchor point="topleft" relativeTo="$parent" relativePoint="topleft"/>
+                </Anchors>
+            </Button>
+        </Windows>
+    </Window>
+
+    <Window name="AutoBandCopyLinkWindow" inherits="EA_Window_Default" movable="true" layer="popup" savesettings="false" show="false">
+        <Size>
+            <AbsPoint x="560" y="200" />
+        </Size>
+        <Anchors>
+            <Anchor point="center" relativePoint="center">
+                <AbsPoint x="0" y="-120" />
+            </Anchor>
+        </Anchors>
+        <EventHandlers>
+            <EventHandler event="OnInitialize" function="AutoBand.OnCopyLinkInitialize" />
+            <EventHandler event="OnKeyEscape" function="AutoBand.HideCopyLink" />
+        </EventHandlers>
+        <Windows>
+            <Window name="$parentTitleBar" inherits="EA_TitleBar_Default" />
+            <Button name="$parentClose" inherits="EA_Button_DefaultWindowClose">
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBand.HideCopyLink" />
+                </EventHandlers>
+            </Button>
+            <Window name="$parentBackground" inherits="EA_Window_DefaultBackgroundFrame">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft"><AbsPoint x="0" y="32" /></Anchor>
+                    <Anchor point="bottomright" relativePoint="bottomright" />
+                </Anchors>
+            </Window>
+            <Label name="$parentInstruction" font="font_clear_small" textalign="left" wordwrap="false" mouseovertext="false">
+                <Size><AbsPoint x="520" y="24" /></Size>
+                <Anchors><Anchor point="topleft" relativeTo="$parentBackground" relativePoint="topleft"><AbsPoint x="16" y="12" /></Anchor></Anchors>
+                <Color r="230" g="230" b="230" />
+            </Label>
+            <EditBox name="$parentUrlInput" inherits="EA_EditBox_DefaultFrame_Multiline" maxchars="1000" taborder="1" linecount="2">
+                <Size><AbsPoint x="520" y="46" /></Size>
+                <Anchors><Anchor point="topleft" relativeTo="$parentBackground" relativePoint="topleft"><AbsPoint x="16" y="44" /></Anchor></Anchors>
+                <TextOffset x="6" y="2" />
+            </EditBox>
+            <Button name="$parentCloseButton" inherits="EA_Button_DefaultResizeable" textalign="center">
+                <Size><AbsPoint x="120" y="40" /></Size>
+                <Anchors><Anchor point="bottomright" relativePoint="bottomright" relativeTo="$parentBackground"><AbsPoint x="-16" y="-22" /></Anchor></Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBand.HideCopyLink" />
+                </EventHandlers>
+            </Button>
+        </Windows>
+    </Window>
+
+    <Window name="AutoBandWindowLeaderPromotionPopup" inherits="EA_Window_Default" movable="true" layer="popup" savesettings="false" show="false">
+        <Size>
+            <AbsPoint x="620" y="380" />
+        </Size>
+        <Anchors>
+            <Anchor point="center" relativePoint="center">
+                <AbsPoint x="0" y="-40" />
+            </Anchor>
+        </Anchors>
+        <EventHandlers>
+            <EventHandler event="OnInitialize" function="AutoBandWindowLeaderPromotionPopup.Initialize" />
+            <EventHandler event="OnKeyEscape" function="AutoBandWindowLeaderPromotionPopup.Hide" />
+        </EventHandlers>
+        <Windows>
+            <!-- Title Bar, Close button -->
+            <Window name="$parentTitleBar" inherits="EA_TitleBar_Default" />
+            <Button name="$parentClose" inherits="EA_Button_DefaultWindowClose">
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowLeaderPromotionPopup.Hide" />
+                </EventHandlers>
+            </Button>
+
+            <!-- Background Frame -->
+            <Window name="$parentBackground" inherits="EA_Window_DefaultBackgroundFrame">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft">
+                        <AbsPoint x="0" y="32" />
+                    </Anchor>
+                    <Anchor point="bottomright" relativePoint="bottomright" />
+                </Anchors>
+            </Window>
+
+            <Label name="$parentSummaryLabel" font="font_default_text" textalign="left" wordwrap="true" mouseovertext="false">
+                <Size><AbsPoint x="572" y="60" /></Size>
+                <Anchors>
+                    <Anchor point="topleft" relativeTo="$parentBackground" relativePoint="topleft">
+                        <AbsPoint x="24" y="18" />
+                    </Anchor>
+                </Anchors>
+                <Color r="230" g="230" b="230" />
+            </Label>
+            <Window name="$parentSectionSeparator" inherits="EA_Window_DefaultSeparator" handleinput="false">
+                <Anchors>
+                    <Anchor point="topleft" relativeTo="$parentBackground" relativePoint="topleft">
+                        <AbsPoint x="0" y="61" />
+                    </Anchor>
+                    <Anchor point="topright" relativeTo="$parentBackground" relativePoint="topright">
+                        <AbsPoint x="0" y="61" />
+                    </Anchor>
+                </Anchors>
+            </Window>
+            <Label name="$parentDetailsLabel" font="font_default_text" textalign="left" wordwrap="true" mouseovertext="false">
+                <Size><AbsPoint x="572" y="172" /></Size>
+                <Anchors>
+                    <Anchor point="topleft" relativeTo="$parentBackground" relativePoint="topleft">
+                        <AbsPoint x="24" y="93" />
+                    </Anchor>
+                </Anchors>
+                <Color r="255" g="204" b="102" />
+            </Label>
+            <Button name="$parentOpenConfigButton" inherits="EA_Button_DefaultResizeable" textalign="center">
+                <Size><AbsPoint x="160" y="40" /></Size>
+                <Anchors>
+                    <Anchor point="bottomleft" relativePoint="bottomleft">
+                        <AbsPoint x="24" y="-20" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowLeaderPromotionPopup.OnOpenConfig" />
+                </EventHandlers>
+            </Button>
+            <Button name="$parentCloseButton" inherits="EA_Button_DefaultResizeable" textalign="center">
+                <Size><AbsPoint x="120" y="40" /></Size>
+                <Anchors>
+                    <Anchor point="bottomright" relativePoint="bottomright">
+                        <AbsPoint x="-24" y="-20" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowLeaderPromotionPopup.Hide" />
+                </EventHandlers>
+            </Button>
+        </Windows>
+    </Window>
+
+    <Window name="AutoBandWindowScoreboardPreview" inherits="EA_Window_Default" movable="true" layer="popup" savesettings="false" show="false">
+        <Size>
+            <AbsPoint x="540" y="420" />
+        </Size>
+        <Anchors>
+            <Anchor point="center" relativePoint="center">
+                <AbsPoint x="0" y="-20" />
+            </Anchor>
+        </Anchors>
+        <EventHandlers>
+            <EventHandler event="OnInitialize" function="AutoBandWindowScoreboardPreview.Initialize" />
+            <EventHandler event="OnKeyEscape" function="AutoBandWindowScoreboardPreview.Hide" />
+        </EventHandlers>
+        <Windows>
+            <Window name="$parentTitleBar" inherits="EA_TitleBar_Default" />
+            <Button name="$parentClose" inherits="EA_Button_DefaultWindowClose">
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowScoreboardPreview.Hide" />
+                </EventHandlers>
+            </Button>
+
+            <Window name="$parentBackground" inherits="EA_Window_DefaultBackgroundFrame">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft">
+                        <AbsPoint x="0" y="32" />
+                    </Anchor>
+                    <Anchor point="bottomright" relativePoint="bottomright" />
+                </Anchors>
+            </Window>
+
+            <Label name="$parentSummaryLabel" font="font_default_text" textalign="left" wordwrap="true" mouseovertext="false">
+                <Size><AbsPoint x="492" y="48" /></Size>
+                <Anchors>
+                    <Anchor point="topleft" relativeTo="$parentBackground" relativePoint="topleft">
+                        <AbsPoint x="24" y="14" />
+                    </Anchor>
+                </Anchors>
+                <Color r="230" g="230" b="230" />
+            </Label>
+
+            <Window name="$parentSectionSeparator" inherits="EA_Window_DefaultSeparator" handleinput="false">
+                <Anchors>
+                    <Anchor point="topleft" relativeTo="$parentBackground" relativePoint="topleft">
+                        <AbsPoint x="0" y="55" />
+                    </Anchor>
+                    <Anchor point="topright" relativeTo="$parentBackground" relativePoint="topright">
+                        <AbsPoint x="0" y="55" />
+                    </Anchor>
+                </Anchors>
+            </Window>
+
+            <Label name="$parentDetailsLabel" font="font_chat_text" textalign="left" wordwrap="true" mouseovertext="false">
+                <Size><AbsPoint x="492" y="240" /></Size>
+                <Anchors>
+                    <Anchor point="topleft" relativeTo="$parentBackground" relativePoint="topleft">
+                        <AbsPoint x="24" y="88" />
+                    </Anchor>
+                </Anchors>
+                <Color r="255" g="204" b="102" />
+            </Label>
+
+            <Button name="$parentConfirmButton" inherits="EA_Button_DefaultResizeable" textalign="center">
+                <Size><AbsPoint x="120" y="40" /></Size>
+                <Anchors>
+                    <Anchor point="bottomleft" relativePoint="bottomleft">
+                        <AbsPoint x="24" y="-20" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowScoreboardPreview.OnConfirm" />
+                </EventHandlers>
+            </Button>
+
+            <Button name="$parentCancelButton" inherits="EA_Button_DefaultResizeable" textalign="center">
+                <Size><AbsPoint x="120" y="40" /></Size>
+                <Anchors>
+                    <Anchor point="bottomright" relativePoint="bottomright">
+                        <AbsPoint x="-24" y="-20" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowScoreboardPreview.OnCancel" />
+                </EventHandlers>
+            </Button>
+        </Windows>
+    </Window>
+</Windows>
+
+</Interface>

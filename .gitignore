@@ -1,0 +1,4 @@
+dist/
+__pycache__/
+*.pyc
+optional/AutoBand_RealmRank.csv

@@ -1,0 +1,1275 @@
+<Interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Scripts>
+    <Script file="AutoBandWindowConfig.lua" />
+</Scripts>
+<Windows>
+
+    <!-- Config: composition checks, auto-kick, social, chat output. Instance AutoBandWindowConfigTab. -->
+    <Window name="AutoBandWindowConfig" layer="secondary" movable="false">
+        <Anchors>
+            <Anchor point="topleft" relativePoint="topleft" relativeTo="AutoBandTabsWindow">
+                <AbsPoint x="0" y="0" />
+            </Anchor>
+            <Anchor point="bottomright" relativePoint="bottomright" relativeTo="AutoBandTabsWindow">
+                <AbsPoint x="0" y="0" />
+            </Anchor>
+        </Anchors>
+        <EventHandlers>
+            <EventHandler event="OnInitialize" function="AutoBandWindowConfig.Initialize" />
+        </EventHandlers>
+        <Windows>
+            <Window name="$parentCompositionFrame" layer="background" handleinput="false">
+                <Size>
+                    <AbsPoint x="576" y="341" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="12" y="4" />
+                    </Anchor>
+                </Anchors>
+            </Window>
+            <Label name="$parentCompositionHeader" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="552" y="24" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="24" y="10" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentKickCheckBox" inherits="EA_Button_DefaultCheckBox">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="24" y="42" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnKickCheckBox" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentAutoKickLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="246" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="52" y="46" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnLabelClick" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Label name="$parentAutoKickNoteLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true" show="false">
+                <Size>
+                    <AbsPoint x="130" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topright" relativePoint="topleft" relativeTo="$parentAutoKickLabel">
+                        <AbsPoint x="8" y="0" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnLabelClick" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentDpsWeightingCheckBox" inherits="EA_Button_DefaultCheckBox">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="24" y="80" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnDpsWeightingCheckBox" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentDpsWeightingLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="150" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="52" y="84" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnLabelClick" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Label name="$parentDpsWeightingNoteLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true" show="false">
+                <Size>
+                    <AbsPoint x="200" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topright" relativePoint="topleft" relativeTo="$parentDpsWeightingLabel">
+                        <AbsPoint x="8" y="0" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnLabelClick" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Label name="$parentMaxMdpsLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="56" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="232" y="122" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentButtonMinusMaxMdps" inherits="EA_Button_DefaultMinus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="292" y="120" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPressMaxMdpsMinusButton" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentMaxMdpsValueLabel" inherits="EA_Label_DefaultText" textalign="center" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="36" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="right" relativePoint="left" relativeTo="$parentButtonMinusMaxMdps">
+                        <AbsPoint x="2" y="0" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentButtonPlusMaxMdps" inherits="EA_Button_DefaultPlus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="350" y="120" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPressMaxMdpsPlusButton" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentMaxRdpsLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="56" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="412" y="122" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentButtonMinusMaxRdps" inherits="EA_Button_DefaultMinus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="472" y="120" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPressMaxRdpsMinusButton" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentMaxRdpsValueLabel" inherits="EA_Label_DefaultText" textalign="center" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="36" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="right" relativePoint="left" relativeTo="$parentButtonMinusMaxRdps">
+                        <AbsPoint x="2" y="0" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentButtonPlusMaxRdps" inherits="EA_Button_DefaultPlus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="530" y="120" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPressMaxRdpsPlusButton" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Button name="$parentAltCheckCheckBox" inherits="EA_Button_DefaultCheckBox">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="24" y="156" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnAltCheckCheckBox" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentAltCheckLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="246" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="52" y="160" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnLabelClick" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentExcludeRealmHealerAltSpecCheckBox" inherits="EA_Button_DefaultCheckBox">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="306" y="156" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnExcludeRealmHealerAltSpecCheckBox" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentExcludeRealmHealerAltSpecLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="242" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="334" y="160" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnLabelClick" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentBWSorcAsMDPSCheckBox" inherits="EA_Button_DefaultCheckBox">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="24" y="198" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnBWSorcAsMDPSCheckBox" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentBWSorcAsMDPSLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="246" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="52" y="202" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnLabelClick" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Label name="$parentCustomRolesLink" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="160" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="306" y="202" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnCustomRolesLink" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentKickLowRankCheckBox" inherits="EA_Button_DefaultCheckBox">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="24" y="239" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnKickLowRankCheckBox" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentAutoKickLowRankLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="524" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="52" y="243" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnLabelClick" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Label name="$parentRankReqLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="56" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="52" y="281" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentButtonMinusRank" inherits="EA_Button_DefaultMinus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="112" y="279" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPressRankMinusButton" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentMinRankValueLabel" inherits="EA_Label_DefaultText" textalign="center" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="36" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="right" relativePoint="left" relativeTo="$parentButtonMinusRank">
+                        <AbsPoint x="2" y="0" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentButtonPlusRank" inherits="EA_Button_DefaultPlus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="170" y="279" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPressRankPlusButton" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentHealerRankReqLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="56" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="232" y="281" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentButtonMinusHealerRank" inherits="EA_Button_DefaultMinus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="292" y="279" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPressHealerRankMinusButton" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentMinHealerRankValueLabel" inherits="EA_Label_DefaultText" textalign="center" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="36" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="right" relativePoint="left" relativeTo="$parentButtonMinusHealerRank">
+                        <AbsPoint x="2" y="0" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentButtonPlusHealerRank" inherits="EA_Button_DefaultPlus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="350" y="279" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPressHealerRankPlusButton" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentDpsRankReqLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="56" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="412" y="281" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentButtonMinusDpsRank" inherits="EA_Button_DefaultMinus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="472" y="279" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPressDpsRankMinusButton" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentMinDpsRankValueLabel" inherits="EA_Label_DefaultText" textalign="center" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="36" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="right" relativePoint="left" relativeTo="$parentButtonMinusDpsRank">
+                        <AbsPoint x="2" y="0" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentButtonPlusDpsRank" inherits="EA_Button_DefaultPlus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="530" y="279" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPressDpsRankPlusButton" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Button name="$parentBackFillCheckBox" inherits="EA_Button_DefaultCheckBox">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="24" y="315" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnBackFillCheckBox" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentBackFillLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="246" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="52" y="319" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnLabelClick" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentBackFillNoHeadsUpsCheckBox" inherits="EA_Button_DefaultCheckBox">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="306" y="315" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnBackFillNoHeadsUpsCheckBox" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentBackFillNoHeadsUpsLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="242" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="334" y="319" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnLabelClick" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Window name="$parentRemoveHeaderSeparator" inherits="EA_Window_DefaultSeparator" layer="background" handleinput="false">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="0" y="345" />
+                    </Anchor>
+                    <Anchor point="topright" relativePoint="topright" relativeTo="$parent">
+                        <AbsPoint x="0" y="345" />
+                    </Anchor>
+                </Anchors>
+            </Window>
+            <Window name="$parentRemoveFrame" layer="background" handleinput="false">
+                <Size>
+                    <AbsPoint x="576" y="182" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="12" y="373" />
+                    </Anchor>
+                </Anchors>
+            </Window>
+            <Label name="$parentRemoveHeader" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="552" y="24" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="24" y="379" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentKickToofarCheckBox" inherits="EA_Button_DefaultCheckBox">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="24" y="411" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnKickToofarCheckBox" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentAutoKickToofarLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="246" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="52" y="415" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnLabelClick" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentKickIgnoreCheckBox" inherits="EA_Button_DefaultCheckBox">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="306" y="411" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnKickIgnoreCheckBox" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentKickIgnoreLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="242" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="334" y="415" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnLabelClick" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Label name="$parentRadiusLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="64" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="52" y="453" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentButtonMinusRadius" inherits="EA_Button_DefaultMinus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="120" y="451" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPressRadiusMinusButton" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentRadiusValueLabel" inherits="EA_Label_DefaultText" textalign="center" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="40" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="right" relativePoint="left" relativeTo="$parentButtonMinusRadius">
+                        <AbsPoint x="2" y="0" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentButtonPlusRadius" inherits="EA_Button_DefaultPlus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="182" y="451" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPressRadiusPlusButton" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentKickTimeLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="56" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="232" y="453" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentButtonMinusTime" inherits="EA_Button_DefaultMinus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="292" y="451" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPressTimeMinusButton" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentAutoKickTimeoutLabel" inherits="EA_Label_DefaultText" textalign="center" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="64" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="right" relativePoint="left" relativeTo="$parentButtonMinusTime">
+                        <AbsPoint x="2" y="0" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentButtonPlusTime" inherits="EA_Button_DefaultPlus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="378" y="451" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPressTimePlusButton" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Button name="$parentKickRvRZonesCheckBox" inherits="EA_Button_DefaultCheckBox">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="24" y="487" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnKickRvRZonesCheckBox" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentAutoKickRvRZonesLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="246" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="52" y="491" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnLabelClick" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentKickStealthersCheckBox" inherits="EA_Button_DefaultCheckBox">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="306" y="487" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnKickStealthersCheckBox" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentAutoKickStealthersLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="242" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="334" y="491" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnLabelClick" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentRestrictRaceCheckBox" inherits="EA_Button_DefaultCheckBox">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="24" y="525" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnRestrictRaceCheckBox" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentRestrictRaceLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="246" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="52" y="529" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnLabelClick" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentCommonRaceNamesCheckBox" inherits="EA_Button_DefaultCheckBox">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="306" y="525" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnCommonRaceNamesCheckBox" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentCommonRaceNamesLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="242" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="334" y="529" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnLabelClick" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Window name="$parentSocialLabelSeparator" inherits="EA_Window_DefaultSeparator" layer="background" handleinput="false">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="0" y="555" />
+                    </Anchor>
+                    <Anchor point="topright" relativePoint="topright" relativeTo="$parent">
+                        <AbsPoint x="0" y="555" />
+                    </Anchor>
+                </Anchors>
+            </Window>
+            <Window name="$parentSocialFrame" layer="background" handleinput="false">
+                <Size>
+                    <AbsPoint x="576" y="68" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="12" y="583" />
+                    </Anchor>
+                </Anchors>
+            </Window>
+            <Label name="$parentSocialLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="552" y="24" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="24" y="589" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Label name="$parentGuildPriorityLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="104" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="24" y="625" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentButtonMinusGuildPriority" inherits="EA_Button_DefaultMinus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="132" y="623" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPressGuildPriorityMinusButton" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentGuildPriorityValueLabel" inherits="EA_Label_DefaultText" textalign="center" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="112" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="right" relativePoint="left" relativeTo="$parentButtonMinusGuildPriority">
+                        <AbsPoint x="2" y="0" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentButtonPlusGuildPriority" inherits="EA_Button_DefaultPlus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="266" y="623" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPressGuildPriorityPlusButton" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentFriendPriorityLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="108" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="306" y="625" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentButtonMinusFriendPriority" inherits="EA_Button_DefaultMinus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="418" y="623" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPressFriendPriorityMinusButton" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentFriendPriorityValueLabel" inherits="EA_Label_DefaultText" textalign="center" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="112" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="right" relativePoint="left" relativeTo="$parentButtonMinusFriendPriority">
+                        <AbsPoint x="2" y="0" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentButtonPlusFriendPriority" inherits="EA_Button_DefaultPlus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="552" y="623" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPressFriendPriorityPlusButton" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Window name="$parentChatHeaderSeparator" inherits="EA_Window_DefaultSeparator" layer="background" handleinput="false">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="0" y="651" />
+                    </Anchor>
+                    <Anchor point="topright" relativePoint="topright" relativeTo="$parent">
+                        <AbsPoint x="0" y="651" />
+                    </Anchor>
+                </Anchors>
+            </Window>
+            <Window name="$parentChatFrame" layer="background" handleinput="false">
+                <Size>
+                    <AbsPoint x="576" y="151" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="12" y="679" />
+                    </Anchor>
+                </Anchors>
+            </Window>
+            <Label name="$parentChatHeader" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="552" y="24" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="24" y="685" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Label name="$parentPrefixLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="70" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="24" y="719" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <EditBox name="$parentPrefixEditBox" inherits="EA_EditBox_DefaultFrame" maxchars="20" taborder="1">
+                <Size>
+                    <AbsPoint x="180" y="30" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="100" y="717" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnKeyEnter" function="AutoBandWindowConfig.OnPrefixApply" />
+                    <EventHandler event="OnKeyEscape" function="AutoBandWindowConfig.OnPrefixEscape" />
+                    <EventHandler event="OnTextChanged" function="AutoBandWindowConfig.OnPrefixTextChanged" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </EditBox>
+            <Button name="$parentPrefixApplyButton" inherits="EA_Button_DefaultResizeable">
+                <Size>
+                    <AbsPoint x="112" y="39" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="306" y="712" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPrefixApply" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Button name="$parentPrefixResetButton" inherits="EA_Button_DefaultResizeable">
+                <Size>
+                    <AbsPoint x="112" y="39" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="428" y="712" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPrefixReset" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentPrefixColorLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="104" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="24" y="766" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentPrefixColorMinusButton" inherits="EA_Button_DefaultMinus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="132" y="764" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPrefixColorMinus" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentPrefixColorValueLabel" inherits="EA_Label_DefaultText" textalign="center" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="112" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="right" relativePoint="left" relativeTo="$parentPrefixColorMinusButton">
+                        <AbsPoint x="2" y="0" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentPrefixColorPlusButton" inherits="EA_Button_DefaultPlus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="266" y="764" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPrefixColorPlus" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentLeadColorLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="108" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="306" y="766" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentLeadColorMinusButton" inherits="EA_Button_DefaultMinus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="418" y="764" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnLeadColorMinus" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentLeadColorValueLabel" inherits="EA_Label_DefaultText" textalign="center" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="112" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="right" relativePoint="left" relativeTo="$parentLeadColorMinusButton">
+                        <AbsPoint x="2" y="0" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Button name="$parentLeadColorPlusButton" inherits="EA_Button_DefaultPlus">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="552" y="764" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnLeadColorPlus" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Button name="$parentPrefixGuildCheckBox" inherits="EA_Button_DefaultCheckBox">
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="24" y="800" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnPrefixGuildCheckBox" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Button>
+            <Label name="$parentPrefixGuildLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="160" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent">
+                        <AbsPoint x="52" y="804" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnLButtonUp" function="AutoBandWindowConfig.OnLabelClick" />
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Label name="$parentPrefixPreviewClose" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="10" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topright" relativeTo="$parent">
+                        <AbsPoint x="576" y="804" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Label name="$parentPrefixPreviewLabel" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="100" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topright" relativeTo="$parentPrefixPreviewClose">
+                        <AbsPoint x="0" y="0" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+            <Label name="$parentPrefixPreviewOpen" inherits="EA_Label_DefaultText" textalign="left" wordwrap="false" handleinput="true">
+                <Size>
+                    <AbsPoint x="10" y="26" />
+                </Size>
+                <Anchors>
+                    <Anchor point="topleft" relativePoint="topright" relativeTo="$parentPrefixPreviewLabel">
+                        <AbsPoint x="0" y="0" />
+                    </Anchor>
+                </Anchors>
+                <EventHandlers>
+                    <EventHandler event="OnMouseOver" function="AutoBandWindowConfig.OnControlMouseOver" />
+                    <EventHandler event="OnMouseOverEnd" function="AutoBandWindowConfig.OnControlMouseOverEnd" />
+                </EventHandlers>
+            </Label>
+        </Windows>
+    </Window>
+</Windows>
+</Interface>
